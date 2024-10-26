@@ -1,23 +1,25 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-# Part 1: File and Directory Exploration
-echo "Welcome to the Interactive File and Directory Explorer!"
+echo "Welcome to Interactive File and Directory Explorer"
+list_of_files=$(ls -lh | tail -n +2 | awk -F' ' '{if (substr($1,1,1) =="-") {print "File: " $9" "$5} else if (substr($1,1,1) == "d") {print "Directory: "$9" "$5}}')
+
+echo "List of Files and Directories in current path"
+echo ""	
+echo "$list_of_files"
+echo ""
+
 
 while true; do
-    # List all files and directories in the current path
-    echo "Files and Directories in the Current Path:"
-    ls -lh
 
-    # Part 2: Character Counting
-    read -p "Enter a line of text (Press Enter without text to exit): " input
+	read -p "Enter a line of text:" input
 
-    # Exit if the user enters an empty string
-    if [ -z "$input" ]; then
-        echo "Exiting the Interactive Explorer. Goodbye!"
-        break
-    fi
+	if [[ -z "$input" ]]; then
+		echo "Interactive File has Exited"
+		break
+	fi
 
-    # Calculate and print the character count for the input line
-    char_count=$(echo -n "$input" | wc -m)
-    echo "Character Count: $char_count"
+	characters=$(echo ${input} | wc -m)
+	echo "Number of characters: ${characters}"
+
 done
+
